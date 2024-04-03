@@ -5,29 +5,33 @@ float dzoom ;
 boolean reload ;
 int NB_ITER ;
 int draw_type ;
+PVector Julia_c ;
 
 void setup(){
   
   size(800,800,P2D);
+  
+  Julia_c = new PVector(-0.545,0.6);
+  Julia_c = new PVector(.39,0.2);
+  NB_ITER = 50 ; // number of itteration
   
   zoom = 1 ;
   dzoom = 0 ;
   reload = true ;
   center = new PVector(0,0);
   set_shader("shader.glsl") ;
-  NB_ITER = 50 ;
   draw_type = 0 ;
   
   //frameRate(30);
-  
+  keyPressed();
 }
 
 void set_shader(String file){
   shader = loadShader(file);
-  //shader.set("u_mouse", width*.75+float(mouseX),height/2-mouseY);
   shader.set("zoom", zoom);
   shader.set("NB_ITER", NB_ITER);
   shader.set("center",center.x,center.y);
+  shader.set("julia_c",Julia_c.x,Julia_c.y); // you can change this value
   shader(shader);
 }
 
@@ -52,17 +56,25 @@ void keyPressed(){
     set_shader("shader.glsl");
     
   }
+  else if (keyCode == 10){ // Enter
+    println("Save pictures");
+    save("image/img"+hour()+":"+minute()+":"+second()+".png");
+  }
+  else if (keyCode == 18){ // alt
+    zoom = 1;
+    dzoom = 0 ;
+    center = new PVector(0,0);
+  }
   else if (keyCode == 37)  center.x += dx ;
   else if (keyCode == 38)  center.y -= dx ;
   else if (keyCode == 39)  center.x -= dx ;
   else if (keyCode == 40)  center.y += dx ;
-  else if (keyCode == 18)  zoom = 1 ; // alt
   else if (key == 'm')  dzoom -= 0.01 ;
   else if (key == 'l')  dzoom += 0.01 ;
-  else if (key == 'o')  NB_ITER -= 50 ;
-  else if (key == 'p')  NB_ITER = min(50,NB_ITER-50) ;
+  else if (key == 'o')  NB_ITER = max(10,NB_ITER-20) ;
+  else if (key == 'p')  NB_ITER += 20 ;
   else if (key == ';')  draw_type = (draw_type+1)%3 ;
-  else println(key,keyCode);
+  else println("Unbound key : ",key,"code : ",keyCode);
   
   shader.set("zoom", zoom);
   shader.set("center",center.x,center.y);
