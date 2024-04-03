@@ -35,6 +35,8 @@ An SDF is a signed distance function. This algorithm tries to calculate the dist
 
 To compute this distance, we compute the $z_n$ sequence, and at same time its derivative. So we get $dz_{n+1} = 2 * z * dz $. With this derivative, we can calulate something called the Hubbard-Douady potential $ G_c(z_0) $. We can use this potential to approximate the distance $d_c = \frac{G_c(z_0)}{\nabla G_c(z_0)}$. In our case, we get $d_c =  \lvert{z_n}\rvert  \frac{\log{\lvert{z_n}\rvert}}{ \lvert{dz_n}\rvert} $. You can find more explanations [here](https://iquilezles.org/articles/distancefractals/).
 
+<img src="image/img8.png" width="350">
+
 ## Some Pictures
 
 <img src="image/img6.png" width="350">
