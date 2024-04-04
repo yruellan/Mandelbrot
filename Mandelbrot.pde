@@ -12,7 +12,8 @@ void setup(){
   size(800,800,P2D);
   
   Julia_c = new PVector(-0.545,0.6);
-  Julia_c = new PVector(.39,0.2);
+  //Julia_c = new PVector(-0.8,.17);
+  
   NB_ITER = 50 ; // number of itteration
   
   zoom = 1 ;
@@ -57,7 +58,7 @@ void keyPressed(){
     
   }
   else if (keyCode == 10){ // Enter
-    println("Save pictures");
+    println("Save picture");
     save("image/img"+hour()+":"+minute()+":"+second()+".png");
   }
   else if (keyCode == 18){ // alt
