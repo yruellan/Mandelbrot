@@ -12,7 +12,9 @@ void setup(){
   size(800,800,P2D);
   
   Julia_c = new PVector(-0.545,0.6);
-  //Julia_c = new PVector(-0.8,.17);
+  Julia_c = new PVector(-0.8,.17);
+  Julia_c = new PVector(-0.15, -0.78);
+  Julia_c = new PVector(-0.78, -0.15);
   
   NB_ITER = 50 ; // number of itteration
   

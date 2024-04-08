@@ -1,4 +1,9 @@
 **.DS_Store
+**.vscode
+
+
 **.o
 **.so
-**.py
+Main.py
+Julia_old.py
+Julia_Thread.py
