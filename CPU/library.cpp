@@ -1,5 +1,3 @@
-#include <iostream>
-using namespace std;
 
 extern "C" float Julia(float z_x,float z_y,float c_x,float c_y,int itt = 1000){
     float temp ;
@@ -17,44 +15,25 @@ extern "C" float Julia(float z_x,float z_y,float c_x,float c_y,int itt = 1000){
     return -1.0 ;
 }
 
-extern "C" double julia(int x, int y, int X, int Y, int Max){
-    double temp ;
-    double za = 0 ;
-    double zb = 0 ;
+extern "C" int* JuliaColor(float z_x,float z_y,float c_x,float c_y,int itt = 1000){
+    int col[3] = {0,0,0};
 
-    double c_a = ( 3.5 * x ) / ( X - 1.0 ) - 2.5 ;
-    double c_b = ( -2.5 * y ) / ( Y - 1.0 ) + 1.25 ;
+    float h = Julia(z_x,z_y,c_x,c_y,itt);
+    h = h * 10.0 ;
+    // s = 1, v = 1
 
-    int i = 0 ;
-    while ( i < Max && (za * za + zb * zb) < 4 ){
-        // z = za * za - zb * zb  +  za * zb + zb * za  +  ca + cb
-        temp = za * za - zb * zb + c_a ;
-        zb = za * zb * 2 + c_b ;
-        za = temp ;
-        i++ ;
-    }
+    if (h==-1) return col ;
 
-    return 8*i / ((double) Max ) * 255;
+    if (h == 1.0) h = 0.0 ;
+    int i = int(h*6.0);
+    int f = int(255*(h*6.0 - i));
+    
+    if (i==0) col[0] = 255 ; col[1] = f ; col[2] = 0 ; 
+    if (i==1) col[0] = 255-f ; col[1] = 255 ; col[2] = 0 ; 
+    if (i==2) col[0] = 0 ; col[1] = 255 ; col[2] = f ; 
+    if (i==3) col[0] = 0 ; col[1] = 255-f ; col[2] = 255 ; 
+    if (i==4) col[0] = f ; col[1] = 0 ; col[2] = 255 ; 
+    if (i==5) col[0] = 255 ; col[1] = 0 ; col[2] = 255-f ;
 
+    return col ;
 }
-
-extern "C" double* loop(int X, int Y, int Max){
-    double l[X][Y] ;
-    for ( int i = 0; i < X ; i++){
-        for ( int j = 0; j < Y ; j++){
-            l[i][j] = julia(i,j,X,Y,Max) ;
-        }
-    }
-    double* p = new double ;
-    return p ;
-}
-
-extern "C" int* point(){
-    int a[2] = {2, 3} ;
-    int* p = &a[2] ;
-    cout << "a  = " << a << endl ;
-    cout << "&a = " << &a << endl ;
-    cout << "*a = " << p << endl ;
-    return p ;
-}
-
